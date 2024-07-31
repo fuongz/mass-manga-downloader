@@ -106,23 +106,23 @@ class HttpService:
 
                 if response.status_code in status_force_list:
                     print(
-                        f"🔄 [{response.elapsed.total_seconds() if response else None}s] {method}: {self.base_url}/{endpoint} - retrying... ({_+1}) (code: wrong status_code)"
+                        f"🔄 [{response.elapsed.total_seconds() if response else None}s] {method}: {self.base_url}{endpoint} - retrying... ({_+1}) (code: wrong status_code)"
                     )
                     continue
 
                 print(
-                    f"✅ [{response.elapsed.total_seconds() if response else None}s] {method}: {self.base_url}/{endpoint} - OK!"
+                    f"✅ [{response.elapsed.total_seconds() if response else None}s] {method}: {self.base_url}{endpoint} - OK!"
                 )
 
                 return response
             except requests.exceptions.Timeout:
                 print(
-                    f"⛔️ [{timeout if timeout else None}] {method}: {self.base_url}/{endpoint} - retrying... ({_+1}) (code: Timeout)"
+                    f"⛔️ [{timeout if timeout else None}] {method}: {self.base_url}{endpoint} - retrying... ({_+1}) (code: Timeout)"
                 )
                 continue
             except requests.exceptions.ConnectionError:
                 print(
-                    f"⛔️ [{timeout if timeout else None}] {method}: {self.base_url}/{endpoint} - stopped ({_+1}) (code: ConnectionError)"
+                    f"⛔️ [{timeout if timeout else None}] {method}: {self.base_url}{endpoint} - stopped ({_+1}) (code: ConnectionError)"
                 )
                 pass
         return None
