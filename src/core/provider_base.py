@@ -1,4 +1,5 @@
 from os import makedirs, path, remove
+import urllib.error
 from PIL import Image
 
 import urllib.request
@@ -72,13 +73,17 @@ class ProviderBase:
         for _ in range(3):
             try:
                 urllib.request.urlretrieve(pic_url, f"{folder}/{new_name}")
+                status = "created"
                 break
             except Exception as e:
+                if isinstance(e, urllib.error.URLError):
+                    status = "error"
+                    print("⛓️‍💥 Broken link...!")
+                    break
                 if e.code == 522:
                     print("⛔️ Retrying...")
                     continue
 
-        status = "created"
         return {
             "status": status,
             "path": f"{folder}/{new_name}",
